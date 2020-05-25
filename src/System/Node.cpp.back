@@ -1,0 +1,26 @@
+//-*-c++-*-
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "System/System.hpp"
+#include "System/DynamicLineup.hpp"
+#include "Optimization/Node.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+Optimization::Node::Node() : System::DynamicLineup::DynamicLineup() {
+  this->init();
+}
+
+//---
+Optimization::Node::~Node() {
+
+  this->DynamicLineup::~DynamicLineup();
+  
+  this->init();
+}
+
+

@@ -1,0 +1,92 @@
+//-*-c++-*-
+#ifndef _NPGTOSExtensiveQuantities_hpp
+#define _NPGTOSExtensiveQuantities_hpp
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Core/ScalarQuantity.hpp"
+#include "Extensive/Extensive.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+class Extensive::Quantities {
+
+  protected :
+
+    //--- TODO: Check for the possible usage of a static array of ScalarQuantity objects
+    //          indexed with typedef enum values ???
+
+    Core::ScalarQuantity mass;
+    Core::ScalarQuantity volume;
+    Core::ScalarQuantity nbMoles;
+    Core::ScalarQuantity entropy;
+    Core::ScalarQuantity gibbsFE;
+    Core::ScalarQuantity enthalpy;
+    Core::ScalarQuantity internalE;
+    Core::ScalarQuantity helmholtzFE;
+    //Core::ScalarQuantity heatCapacity; Maybe more relevant as an Intensive ScalarQuantity(specific heat capacity) ?
+
+    Quantities& init();
+  
+  public :
+
+    Quantities();
+   //~Quantities();
+  
+    virtual inline const Core::ScalarQuantity* const restrict getMass() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getVolume() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getNbMoles() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getEntropy() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getGibbsFE() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getEnthalpy() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getInternalE() const final;
+    virtual inline const Core::ScalarQuantity* const restrict getHelmholtzFE() const final;
+    //virtual inline const Core::Quantity* const restrict getHeatCapacity() const final;
+  
+    virtual inline Core::ScalarQuantity& setMass(double mass) final;
+};
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getMass() const { return &this->mass; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getVolume() const { return &this->volume; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getNbMoles() const { return &this->volume; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getEntropy() const { return &this->entropy; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getEnthalpy() const { return &this->enthalpy; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getGibbsFE() const { return &this->gibbsFE; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getInternalE() const { return &this->internalE; }
+
+//---
+inline const Core::ScalarQuantity*
+  const restrict Extensive::Quantities::getHelmholtzFE() const { return &this->helmholtzFE; }
+
+////---
+//inline const Core::ScalarQuantity*
+//  const restrict Extensive::Quantities::getHeatCapacity() const { return &this->heatCapacity; }
+
+//---
+inline Core::ScalarQuantity&
+  Extensive::Quantities::setMass(double mass) { return this->mass.setValue(mass); }
+
+#endif

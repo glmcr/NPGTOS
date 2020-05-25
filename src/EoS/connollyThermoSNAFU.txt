@@ -1,0 +1,31 @@
+//--- NOTE: subroutine conver is called with thermo(24,id) -> c8
+//    as the 11th argument.
+
+thermo(1,id) := G0
+thermo(2,id) := S0
+thermo(3,id) := V0
+
+thermo(4,id) := c1
+thermo(5,id) := c2
+thermo(6,id) := c3
+thermo(7,id) := c4
+thermo(8,id) := c5
+thermo(9,id) := c6
+thermo(10,id) := c7
+
+thermo(11,id) := b1
+thermo(12,id) := b2
+thermo(13,id) := b3
+thermo(14,id) := b4
+thermo(15,id) := b5
+thermo(16,id) := b6
+thermo(17,id) := b7
+thermo(18,id) := b8
+thermo(19,id) := b9
+thermo(20,id) := b10
+thermo(21,id) := b11
+thermo(22,id) := b12
+
+thermo(23,id) := return values so don't care about it.
+
+thermo(24,id) := c8

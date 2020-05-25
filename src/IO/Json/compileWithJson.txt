@@ -1,0 +1,1 @@
+g++ testjson.cpp -o testjson.xo -ljsoncpp

@@ -1,0 +1,61 @@
+//-*-c++-*-
+#ifndef _NPGTOSSystemDynamicLineup_hpp
+#define _NPGTOSSystemDynamicLineup_hpp
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Core/Constants.hpp"
+#include "System/System.hpp"
+#include "System/Phase.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+class System::DynamicLineup {
+
+  private :
+  
+  protected :
+ 
+    //--- std::vector of Phase objects:
+    //    Intended to be used as a dynamic subset
+    //    of stable(or quasi-stable) phases
+    //    in a particular thermodynamic context.
+    //    Phase objects can be added or removed
+    //    at will hence the Dynamic prefix for
+    //    the name of the class.
+    //
+    //    NOTE: The Phase objects need to be
+    //          deep-copied(except their
+    //          Nomenclature attributes objects
+    //          from which we only need the
+    //          references) from an already
+    //          existing StaticLineup object
+    //          to be able to modifiy the
+    //          chemical potentials of the
+    //          phases components independently.
+    //          This is needed for getting the
+    //          parallelization algorithms working
+    //          properly (i.e. not messing around
+    //          with the shared RAM memory).
+    std::vector<Phase *> phases;
+ 
+    virtual inline DynamicLineup& init() final;
+  
+  public :
+
+    DynamicLineup();
+    ~DynamicLineup();
+};
+
+//---
+inline System::DynamicLineup& System::DynamicLineup::init() {
+
+  this->phases.clear();
+
+  return *this;
+}
+
+#endif

@@ -1,0 +1,25 @@
+//-*-c++-*-
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Intensive/ScalarQuantities.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+Intensive::ScalarQuantities::ScalarQuantities() {
+
+  this->init();
+}
+
+//---
+Intensive::ScalarQuantities& Intensive::ScalarQuantities::init() {
+
+  this->volumicMass.set(0.0, 0.0, Core::UNDEFINED);
+  
+  return *this;
+}
+
+

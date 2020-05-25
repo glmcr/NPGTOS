@@ -1,0 +1,47 @@
+//-*-c++-*-
+#ifndef _NPGTOSOptimizationStaticMassNodesTile_hpp
+#define _NPGTOSOptimizationStaticMassNodesTile_hpp
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Core/Constants.hpp"
+#include "System/System.hpp"
+#include "Optimization.hpp"
+#include "Optimization/NodesTile.hpp"
+#include "Optimization/StaticMassNode.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+class Optimization::StaticMassNodesTile final : public Optimization::NodesTile {
+
+  private :
+  
+  protected :
+
+    //--- NOTE: smNodes can potentially have more than 3 dimensions here:
+    StaticMassNode* restrict smNodes;
+
+    virtual inline StaticMassNodesTile& init() final;
+    
+  public :
+  
+    StaticMassNodesTile();
+    //StaticMassNodesTile(unsigned int nbDimensions, unsigned int totalNbOfNodes);
+    ~StaticMassNodesTile();
+};
+
+//---
+inline Optimization::StaticMassNodesTile& Optimization::StaticMassNodesTile::init() {
+
+  if (this->smNodes) delete [] this->smNodes;
+
+  this->smNodes= NULL;
+  
+  return *this;
+}
+
+#endif
+  

@@ -1,0 +1,53 @@
+//-*-c++-*-
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Core/NonStoichioComponent.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+Core::NonStoichioComponent::NonStoichioComponent() : Core::FactorizedComponent() {
+
+  this->init();
+}
+
+//---
+Core::NonStoichioComponent::NonStoichioComponent(unsigned int NbRefs, double Factor,
+		                                 const Component** const restrict ComponentsRefs) : Core::FactorizedComponent(Factor) {
+  //#ifdef _WTF
+  //assert(NbRefs>0);
+  //#endif
+  
+  //this->nbRefs= NbRefs;
+  //this->stchComponentsRefs= (StoichioComponent**)calloc(this->nbRefs, sizeof(StoichioComponent*));
+  //this->stchComponentsRefs= new StoichioComponent[this->nbRefs];
+
+  for (int stc= 0; stc< NbRefs; stc++) {
+
+    this->stchComponentsRefs.push_back( new StoichioComponent(0.0, ComponentsRefs[stc]) );
+  }
+}
+
+//---
+Core::NonStoichioComponent::~NonStoichioComponent() {
+
+  //--- clear() is supposed to delete the objects contained
+  //    in the vector.
+  this->stchComponentsRefs.clear();
+  
+  // for (auto cit= this->stchComponentsRefs.cbegin();
+  //            cit!= this->stchComponentsRefs.cend(); cit++) { 
+  //   delete *cit;
+  // }
+  
+  // if ( this->stchComponentsRefs ) {
+  //   for (int stc= 0; stc< this->nbRefs; stc++) {
+  //     if (this->stchComponentsRefs[stc]) delete this->stchComponentsRefs[stc];
+  //   }
+  //   delete [] this->stchComponentsRefs;
+  // }
+}
+

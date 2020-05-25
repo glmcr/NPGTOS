@@ -1,0 +1,49 @@
+//-*-c++-*-
+#ifndef _NPGTOSOptimizationNodesTile_hpp
+#define _NPGTOSOptimizationNodesTile_hpp
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Core/Constants.hpp"
+#include "System/System.hpp"
+#include "System/StaticLineup.hpp"
+#include "Optimization.hpp"
+#include "Optimization/Node.hpp"
+
+//---
+using namespace NPGTOS;
+
+//---
+class Optimization::NodesTile : public System::StaticLineup {
+
+  private :
+  
+  protected :  
+
+    unsigned int nbNodes;
+    unsigned int nbDimensions;    
+
+    //--- To test if we can afford to use (in a
+    //    computer programming sense) polymorphism
+    //    paradigm here to deal with more than one
+    //    type of Node objects.
+    //Node** nodes; 
+
+    virtual inline NodesTile& init() final;
+  
+  public :
+
+    NodesTile(); 
+    ~NodesTile();
+};
+
+//---
+inline Optimization::NodesTile& Optimization::NodesTile::init() {
+
+  this->nbNodes= this->nbDimensions= 0;
+  
+  return *this;
+}
+
+#endif

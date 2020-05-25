@@ -1,0 +1,159 @@
+//-*-c++-*-
+#ifndef _NPGTOSEoSFeed_hpp
+#define _NPGTOSEoSFeed_hpp
+
+//---
+#include <cmath>
+
+//---
+#include "NPGTOS.hpp"
+#include "Core/Core.hpp"
+#include "Core/ScalarQuantity.hpp"
+
+//---
+#include "EoS/Constants.hpp"
+
+//---
+//using namespace NPGTOS;
+
+//---
+class EoS::Feed final :
+  private EoS::Constants {
+
+  private :
+
+  protected :        
+
+    int transitionType;
+    double* transitionCoeffs;
+
+    //--- 
+    double (*whichCrunch) (const Feed& FeedObj, double Pressure, double Temperature);
+    
+  public :
+
+    Feed();
+    Feed(GaloreT WhichOne);
+    ~Feed();
+
+    //---
+    virtual inline Feed& init() final override;   
+    
+    //---
+    virtual inline double getHeatCapacity(double Temperature) const final;
+    virtual inline double crunch(double Pressure, double Temperature) const final;
+
+    //virtual inline double getIsobaricExpAlphaE13(double Temperature) const final;
+    //virtual inline double getIsobaricExpAlphaE2E4(double Temperature) const final;
+    
+    static inline double PerpleX1(const Feed& Fd, double Pressure, double Temperature);
+    static inline double PerpleX8(const Feed& Fd, double Pressure, double Temperature);
+    static inline double PerpleX9(const Feed& Fd, double Pressure, double Temperature);
+};
+
+//--- TODO: check for possible other heat capacity equations definitions ??
+inline double EoS::Feed::getHeatCapacity(double Temperature) const {
+
+  //#ifdef _WTF
+  //assert(temperature>0.0) //--- Allow T < 273.15K ??? 
+  //#endif
+
+  //--- Connolly : http://www.perplex.ethz.ch/perplex_thermodynamic_data_file.html
+  //
+  //    CP(T,Pr) = c1 + c2·T + c3/T2 + c4·T2 + c5/T1/2 + c6/T + c7/T3  + c8·T3
+  //
+  //    NOTE: Up to now, I've not seen any thermo. data file with c coeffs. > 5 
+
+  const double TSQE= Temperature*Temperature;
+  
+  //--- Uncomment the following line when using more than 5 "c" coefficients:
+  //    const double TCBE= temperature*tSqe;
+  
+  return this->cTHC[_1] + this->cTHC[_2]*Temperature +
+           this->cTHC[_3]/TSQE + this->cTHC[_4]*TSQE + this->cTHC[_5]/sqrt(Temperature);
+
+  //--- Uncomment the following line when using more than 5 "c" coefficients and add it to
+  //    the end of the preceding accumulation in the return statement.
+  
+  // + this->cTHC[_6]/temperature + this->cTHC[_7]/tCbe + this->cTHC[_7]*tCbe
+}
+
+//---
+inline double EoS::Feed::crunch(double Pressure, double Temperature) const {
+
+  // #ifdef _WTF
+  // assert(Pressure>= EOS_PSTP);    //Core::Constants::STD_PRESSURE.getValue();
+  // assert(Temperature>= EOS_TSTP); //Core::Constants::STD_TEMPERATURE.getValue();
+  // #endif
+
+//--- Connolly Perple_X bundle: gcpd subroutine:
+//
+//    1st part(which is generic for most EoSs except 5,6,11,12,14,15,16,17 and makes)
+//    of Gibbs FE update for new P,T conditions.  
+//
+//       gval = thermo(1,id)
+// c                                 -sdt
+//      *      + t * (thermo(2,id) - thermo(4,id) * dlog(t) - t * (thermo(5,id) + (thermo(7,id) - thermo(24,id)*t) * t))
+//      *      - (thermo(6,id) + thermo(10,id) / t) / t
+//      *      + thermo(8,id) * dsqrt(t) + thermo(9,id)*dlog(t)
+  
+  // const double LNT= log(Temperature);
+  // const double SQRT= sqrt(Temperature);
+  // const double TINV= 1.0/Temperature;
+    
+  // const double MSDT= Temperature *
+  //                   (this->stpEntropy.getValue() - LNT * this->cTHC[_1] - Temperature *
+  // 		    (this->cTHC[_2] + Temperature * ( this->cTHC[_4] - Temperature * this->cTHC[_8]) ) ) -
+  //                   TINV * (this->cTHC[_3] + TINV * this->cTHC[_7]) + SQRT * this->cTHC[_5] + LNT * this->cTHC[_6];
+
+  //                          G0 - S(T,P)dT  + V(T,P)dP
+  //return this->stpGibbs.getValue() + MSDT + this->whichVdPFeed(*this, Pressure, Temperature);
+
+  return this->whichCrunch(*this, Pressure, Temperature);
+}
+
+//---
+inline EoS::Feed& EoS::Feed::init() {
+
+  if (this->transitionCoeffs) delete this->transitionCoeffs;
+
+  this->transitionCoeffs= NULL;
+
+  this->transitionType= Core::UNDEFINED;
+  
+  this->whichCrunch= NULL;
+  
+  return *this;
+}
+
+// //---
+// inline double EoS::Feed::getIsobaricExpAlphaE13(double Temperature) const {
+
+//   // #ifdef _WTF
+//   // assert(Temperature>0);
+//   // #endif
+  
+//   //--- Connolly : http://www.perplex.ethz.ch/perplex_thermodynamic_data_file.html
+//   //
+//   //   Non-constant part of integral(alpha,T=Tr..Tf) = b1*T + b2*T^2 + b3*ln(T) + b4/T
+//   //    
+
+//   return Temperature*(this->bTHC[_1] + 0.5*Temperature*this->bTHC[_2]) +
+//             log(Temperature)*this->bTHC[_3] + this->bTHC[_4]/Temperature; 
+// }
+
+// //---
+// inline double EoS::Feed::getIsobaricExpAlphaE2E4(double Temperature) const {
+
+//   // #ifdef _WTF
+//   // assert(Temperature>0);
+//   // #endif
+  
+//   //--- Connolly : http://www.perplex.ethz.ch/perplex_thermodynamic_data_file.html
+//   //
+//   //  Non-constant part of integral(alpha,T=Tr..Tf) = b1*T + b2*T^2 + b3*ln(T) + b4/T + b5*sqrt(T)
+  
+//   return this->getIsobaricExpAlphaE13(Temperature) + this->bTHC[_5]/sqrt(Temperature);
+// }
+  
+#endif

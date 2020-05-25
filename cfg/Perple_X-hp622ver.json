@@ -1,0 +1,79 @@
+{
+  "CommentFlag" : "Blah:", 
+
+  "toleranceDTOL" : { "Blah:" : "DTOL for unconstrained minimization, energy units",
+                      "Value" : -0.1E-2 , 
+                      "Unit" : "Joule"
+                    } ,
+
+  "standard_variables" : { "Blah:" : "TODO: Use GPA units instead of bars for Pressure ??",
+                           "PressureReference" : { "Unit" : "bar", "Value" : 1.00,  "Uncertainty" : 0.1E-3 } ,
+                           "TemperatureReference"  : { "Unit" : "Kelvin", "Value" : 298.15, "Uncertainty" : 0.1E-4  }
+                         },
+
+  "HSC_conversion" : { "Blah:" : "tag enabling HSC to SUP apparent energy conversion, requires elemental entropies in the component item below",
+                       "Value" : "True" 
+                     },
+
+  "components" : { "Blah:" : "NOTE: ElementalEntropy= Stoichiometrically weighted sum of elements entropies: Na2O -> 2*(Na ent.) + (O2 ent.)/2 " ,
+                   "Na2O"  : { "MolarWeigth" : { "Unit" : "grams", "Value" :  61.9790 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 205.175 } } ,
+                   "MgO"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  40.3040 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 135.255 } } ,
+                   "Al2O3" : { "MolarWeigth" : { "Unit" : "grams", "Value" : 101.9610 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 364.425 } } ,
+                   "SiO2"  : { "MolarWeigth" : { "Unit" : "grams", "Value" :  60.0840 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 223.960 } } ,
+                   "K2O"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  94.1960 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 231.935 } } ,
+                   "CaO"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  56.0770 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 144.205 } } ,
+                   "TiO2"  : { "MolarWeigth" : { "Unit" : "grams", "Value" :  79.8660 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 235.870 } } ,
+                   "MnO"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  70.9370 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 134.795 } } ,
+                   "FeO"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  71.8440 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 129.855 } } ,
+                   "NiO"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  74.6930 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 132.375 } } ,
+                   "ZrO2"  : { "MolarWeigth" : { "Unit" : "grams", "Value" : 123.2200 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 244.330 } } ,
+                   "Cl2"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  70.9060 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 223.080 } } ,
+                   "O2"    : { "MolarWeigth" : { "Unit" : "grams", "Value" :  31.9990 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 205.150 } } ,
+                   "H2O"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  18.0150 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 233.255 } } ,
+                   "CO2"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  44.0100 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 210.890 } } ,
+                   "CuO"   : { "MolarWeigth" : { "Unit" : "grams", "Value" :  79.5450 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 135.725 } } ,
+                   "Cr2O3" : { "MolarWeigth" : { "Unit" : "grams", "Value" :  151.990 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 358.811 } } ,
+                   "F2"    : { "MolarWeigth" : { "Unit" : "grams", "Value" :  37.9968 }, "ElementalEntropy" : { "Unit" : "R", "Value" : 202.79  } } ,
+                   "S2"    : { "MolarWeigth" : { "Unit" : "grams", "Value" :  64.1300 }, "ElementalEntropy" : { "Unit" : "R", "Value" :  64.100 } ,
+                                                 "Blah:" : "Corrected 9/21/2018, Jilei Li. These values are twice the properties of monatomic sulfur. Formerly the monatomic molar mass was used with the diatomic formula."} 
+                 },
+
+    "Phases" : {
+
+       "Forsterite" : { "abbrev"     : "fo",
+	                "formula"    : "MgO_2::SiO2_1",
+			"state"      : "solid",
+		        "enthalpy-H" : { "value": -2172490.0, "Unit": "J_mole"  }, "//" : "Commented in hp622ver.dat" ,
+		        "gibbs-GH"   : { "value": -2200844.0, "Unit": "J_mole"  },
+		        "entropy-S"  : { "value":       95.1, "Unit": "J_moleK" },
+		        "volume-V0"  : { "value":      4.366, "Unit": "J_bar"   },
+		        "EoS"        : { "name" : "PX.HP.08", "//" : "Perple_X EoS 8 for Holland&Powell solid phases hp622." ,
+			                 "HeatCapacityCCoefs" : { "c1": 233.3, "c2": 0.1494E-2, "c3": -603800.0, "c5": -1869.7 },
+				         "VolmPressBCoefs"    : { "b1": 0.285E-4, "b5": 531.1171, "b6": 1285000.0, "b7": -0.3E-5, "b8": 3.84 } }	
+		      } ,
+	
+       "Mn-staurolite" : { "abbrev"     : "mnst",
+	                   "formula"    : "Al2O3_9::SiO2_[7.5]::MnO_4::H2O_2",
+			   "state"      : "solid",
+		           "enthalpy-H" : { "value": , "Unit": "J_mole"  }, "//" : "Commented in hp622ver.dat" ,
+		           "gibbs-GH"   : { "value": , "Unit": "J_mole"  },
+		           "entropy-S"  : { "value": , "Unit": "J_moleK" },
+		           "volume-V0"  : { "value": , "Unit": "J_bar"   },
+		           "EoS"        : { "name" : "PX.HP.08", "//" : "Perple_X EoS 8 for Holland&Powell solid phases hp622." ,
+			                 "HeatCapacityCCoefs" : { "c1": , "c2": , "c3": , "c5":  },
+				         "VolmPressBCoefs"    : { "b1": , "b5": , "b6": , "b7": , "b8": } }	
+			 } ,
+
+       "Vesuvianite" : { "abbrev"     : "vsv",
+	                  "formula"    : "MgO_2::Al2O3_[5.5]::SiO2_18::CaO_19::H2O_[4.5]",
+			  "state"      : "solid",
+		          "enthalpy-H" : { "value": , "Unit": "J_mole"  }, "//" : "Commented in hp622ver.dat" ,
+		          "gibbs-GH"   : { "value": , "Unit": "J_mole"  },
+		          "entropy-S"  : { "value": , "Unit": "J_moleK" },
+		          "volume-V0"  : { "value": , "Unit": "J_bar"   },
+		          "EoS"        : { "name" : "PX.HP.08", "//" : "Perple_X EoS 8 for Holland&Powell solid phases hp622." ,
+			                 "HeatCapacityCCoefs" : { "c1": , "c2": , "c3": , "c5":  },
+				         "VolmPressBCoefs"    : { "b1": , "b5": , "b6": , "b7": , "b8": } }	
+			 }	
+    }    
+}
