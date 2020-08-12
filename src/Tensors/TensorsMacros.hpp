@@ -9,7 +9,7 @@
 #define Tensors_O1O1_DP(O1L,O1R) ((O1L.i)*(O1R.i)+(O1L.j)*(O1R.j)+(O1L.k)*(O1R.k))
 
 //--- Order1(3D vectors) tensors dot product(pointers to Ord1Tensor C structs) :
-#define Tensors_O1O1_DPR(O1L,O1R) ((O1L.i)*(O1R.i)+(O1L.j)*(O1R.j)+(O1L.k)*(O1R.k))
+#define Tensors_O1O1_DPR(O1L,O1R) (((O1L)->i)*((O1R)->i)+((O1L)->j)*((O1R)->j)+((O1L)->k)*((O1R)->k))
 
 //--- Order2(3x3 matrices) tensors double dot product(local Ord2Tensor C structs not pointers) :
 //    
